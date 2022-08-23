@@ -1,8 +1,0 @@
-python3 run_case.py \
---task_name MLEth --train_file data/train_subtask1.csv --do_train \
---validation_file dev_subtask1_text.csv --do_eval \
---num_train_epochs 10 --save_steps 50000 \
---per_device_train_batch_size 32 \
---per_device_eval_batch_size 32 \
---model_name_or_path bert-base-cased \
---output_dir outs --overwrite_output_dir
