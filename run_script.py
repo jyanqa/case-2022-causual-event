@@ -38,16 +38,6 @@ def main():
     trainval_ds = Dataset.from_pandas(df_trainval)
     test_ds = Dataset.from_pandas(df_test)
 
-    df_train['ce'] = df_train['agreement'] # add new column 
-    df_train['non-ce'] = df_train['agreement']
-    for i in range(df_train.shape[0]): 
-        if df_train['label'][i] == 1:
-            df_train['ce'][i] = df_train['agreement'][i] 
-            df_train['non-ce'][i] = (1 - df_train['agreement'][i])
-        else:
-            df_train['non-ce'][i] = df_train['agreement'][i]
-            df_train['ce'][i] = (1 - df_train['agreement'][i])
-        
     # Load BERT/ROBERTA/XLNet tokenizer.
     model_name = args.model_name
     tokenizer = AutoTokenizer.from_pretrained(model_name)
@@ -64,7 +54,7 @@ def main():
                                         return_tensors="pt", 
                                         padding='max_length', 
                                         truncation=True, 
-                                        max_length=60) 
+                                        max_length=args.max_seq_length) 
             
             sentence_encoded['labels'] = torch.LongTensor(np.array([item['label']]))
             sentence_encoded['num_votes'] = torch.LongTensor(np.array(np.around([item['num_votes']],3))) #number of vote
@@ -112,12 +102,12 @@ def main():
                 loss1 = n*r*torch.log(y_pred) + n*(1-r)*torch.log(1-y_pred) #if y_true = 1
                 loss2 = n*r*torch.log(1-y_pred) + n*(1-r)*torch.log(y_pred) #if y_true = 0
                 loss = -torch.sum(y_true*loss1+(1-y_true)*loss2)
-                loss = loss/len(torch.sum(n))
+                loss = loss/torch.sum(n)
             elif args.loss_name == 'ce3':
                 loss1 = n*r*torch.log(y_pred)  #if y_true = 1
                 loss2 = n*r*torch.log(1-y_pred)  #if y_true = 0
                 loss = -torch.sum(y_true*loss1+(1-y_true)*loss2)
-                loss = loss/len(torch.sum(n*r))
+                loss = loss/torch.sum(n*r)
             return (loss, outputs) if return_outputs else loss
     def compute_metrics(pred):
         labels = pred.label_ids
@@ -133,15 +123,15 @@ def main():
     
     training_args = TrainingArguments(
         num_train_epochs=args.num_train_epochs,
-        per_device_train_batch_size=8,
-        per_device_eval_batch_size=8,
+        per_device_train_batch_size=args.batch_size,
+        per_device_eval_batch_size=args.batch_size,
         logging_dir='logs',
         no_cuda=False,  
         output_dir ='.',
         seed = 42,
         learning_rate = args.learning_rate, #defaults 1e-3
         warmup_steps=0, # number of warmup steps for learning rate scheduler
-        weight_decay=0.001,
+        weight_decay=0,
         evaluation_strategy='steps', #defaults: 'no'
         load_best_model_at_end = True,
     )
@@ -200,14 +190,14 @@ def _parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('-m','--model_name', type=str, default='bert-base-uncased')
     parser.add_argument('--data_dir', type=str, default='data')
-    parser.add_argument('--max_seq_length', type=int, default=128)
+    parser.add_argument('--max_seq_length', type=int, default=60)
     parser.add_argument('--num_labels', type=int, default=2)
     parser.add_argument('--batch_size', type=int, default=8)
-    parser.add_argument('-n','--num_train_epochs', type=int, default=3)
-    parser.add_argument('--learning_rate', type=float, default=1e-3)
+    parser.add_argument('-n','--num_train_epochs', type=int, default=10)
+    parser.add_argument('--learning_rate', type=float, default=5e-5)
     parser.add_argument('--warmup_steps', type=int, default=0)
-    parser.add_argument('--weight_decay', type=float, default=0.01)
-    parser.add_argument('--seed', type=int, default=82)
+    parser.add_argument('--weight_decay', type=float, default=0.0)
+    parser.add_argument('--seed', type=int, default=42)
     parser.add_argument('--no_cuda', action='store_true', default=False)
     parser.add_argument('--output_dir', type=str, default='.')
     parser.add_argument('--logging_dir', type=str, default='logs')
