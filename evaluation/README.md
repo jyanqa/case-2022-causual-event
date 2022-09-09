@@ -1,1 +1,0 @@
-This folder contains sample data, evaluation scripts and metadata for our Codalab competition.
