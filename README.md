@@ -15,4 +15,4 @@ python3 run_script.py --model_name <name of model> --loss_name <name of loss>
 ```
 ### Contact Us
 * Arka Mitra, amitra[at]ethz.ch
-* Quynh Anh Nguyen, quynhanh.nguyen[at]uzh.ch
+* Quynh Anh Nguyen, quynhanh.nguyen[at]ethz.ch

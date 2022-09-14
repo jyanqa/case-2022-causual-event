@@ -176,6 +176,8 @@ def main():
     model_performance["f1_binary"] = f1_score(proc_true_values, proc_predicted_values,)
     model_performance['confusion_matrix'] = confusion_matrix(proc_true_values, proc_predicted_values)
     model_performance['confusion_matrix_normalized'] = confusion_matrix(proc_true_values, proc_predicted_values, normalize='true')
+    disp = ConfusionMatrixDisplay(confusion_matrix=model_performance['confusion_matrix'],display_labels = list(id2label.values()))
+    disp.plot()
     # print('------------Model performance------------')
     # print(f'  recall_micro: {model_performance["recall_micro"]}')
     # print(f'  recall_macro: {model_performance["recall_macro"]}')
