@@ -1,4 +1,4 @@
-# Shared Task 3 CASE 2022
+## Code
 
 The repository contains the work for subtask 1 of Shared Task 3 of CASE@EMNLP 2022. 
 
