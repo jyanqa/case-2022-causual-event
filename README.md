@@ -19,24 +19,18 @@ python3 run_script.py --model_name <name of model> --loss_name <name of loss>
 To cite the paper, use the BibTex below:
 
 ```
-@misc{https://doi.org/10.48550/arxiv.2210.14852,
-  doi = {10.48550/ARXIV.2210.14852},
-  
-  url = {https://arxiv.org/abs/2210.14852},
-  
-  author = {Nguyen, Quynh Anh and Mitra, Arka},
-  
-  keywords = {Computation and Language (cs.CL), FOS: Computer and information sciences, FOS: Computer and information sciences},
-  
-  title = {Causality Detection using Multiple Annotation Decision},
-  
-  publisher = {arXiv},
-  
-  year = {2022},
-  
-  copyright = {Creative Commons Attribution 4.0 International}
-}
-
+@inproceedings{nguyen-mitra-2022-noisyannot,
+    title = "{N}oisy{A}nnot@ Causal News Corpus 2022: Causality Detection using Multiple Annotation Decisions",
+    author = "Nguyen, Quynh Anh  and
+      Mitra, Arka",
+    booktitle = "Proceedings of the 5th Workshop on Challenges and Applications of Automated Extraction of Socio-political Events from Text (CASE)",
+    month = dec,
+    year = "2022",
+    address = "Abu Dhabi, United Arab Emirates (Hybrid)",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2022.case-1.11",
+    pages = "79--84",
+    abstract = "The paper describes the work that has been submitted to the 5th workshop on Challenges and Applications of Automated Extraction of socio-political events from text (CASE 2022). The work is associated with Subtask 1 of Shared Task 3 that aims to detect causality in protest news corpus. The authors used different large language models with customized cross-entropy loss functions that exploit annotation information. The experiments showed that bert-based-uncased with refined cross-entropy outperformed the others, achieving a F1 score of 0.8501 on the Causal News Corpus dataset.",
 }
 ```
 ### Contact Us
