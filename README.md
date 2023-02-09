@@ -14,7 +14,7 @@ To obtain the results, run run_script.py using:
 python3 run_script.py --model_name <name of model> --loss_name <name of loss>
 ```
 ## Paper
-*Codebase of the paper [NoisyAnnot@ Causal News Corpus 2022: Causality Detection using Multiple Annotation Decision](https://arxiv.org/abs/2210.14852)* by  Nguyen Quynh Anh and Mitra Arka at [EMNLP 2022](https://2022.emnlp.org).
+*Codebase of the paper [NoisyAnnot@ Causal News Corpus 2022: Causality Detection using Multiple Annotation Decision](https://aclanthology.org/2022.case-1.11/)* by  Nguyen Quynh Anh and Mitra Arka at [EMNLP 2022](https://2022.emnlp.org).
 
 To cite the paper, use the BibTex below:
 
